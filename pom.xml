@@ -27,8 +27,7 @@
     <h2.version>1.4.200</h2.version>
     <spring.kafka.version>2.8.3</spring.kafka.version>
     <jackson.version>2.13.2</jackson.version>
-
-    <skipIntegrationTest>false</skipIntegrationTest>
+    <apache.commons.version>3.12.0</apache.commons.version>
   </properties>
 
   <profiles>
@@ -37,12 +36,6 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
-    </profile>
-    <profile>
-      <id>acceptance-test</id>
-      <modules>
-        <module>acceptance_test</module>
-      </modules>
     </profile>
   </profiles>
   <build>
@@ -132,6 +125,11 @@
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-annotations</artifactId>
         <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${apache.commons.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

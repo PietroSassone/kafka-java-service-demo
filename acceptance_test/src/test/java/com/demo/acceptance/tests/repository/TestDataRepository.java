@@ -12,8 +12,14 @@ import lombok.Setter;
 public class TestDataRepository {
 
     private Response response;
+    private String productId;
+    private Long userId;
+    private String userName;
 
     public void resetTestDataRepository() {
         response = null;
+        productId = null;
+        userId = null;
+        userName = null;
     }
 }

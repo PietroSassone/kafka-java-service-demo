@@ -3,6 +3,7 @@ package com.demo.web.controller.impl;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.HttpStatus;
@@ -33,13 +34,14 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    private static final String CREATED_USER_NOTIFICATION_TOPIC_NAME = "user_operation_notification";
-
     private final UserService userService;
 
     private final UserModelAssembler userModelAssembler;
 
     private final KafkaProducer kafkaProducer;
+
+    @Value("${user.topic.name}")
+    private String userOperationTopicName;
 
     @Autowired
     public UserController(final UserService userService, final UserModelAssembler userModelAssembler, final KafkaProducer kafkaProducer) {
@@ -112,18 +114,20 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable final Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable final Long id) {
         log.info("Delete User Request received for user with id: {}", id);
         final UserEntity userToDelete = userService.findByUserId(id).orElseThrow(() -> new UserNotFoundException(id));
 
         userService.deleteById(id);
         sendUserOperationNotificationToKafka(userToDelete, UserChangeReason.USER_DELETED);
+
+        return ResponseEntity.noContent().build();
     }
 
     private void sendUserOperationNotificationToKafka(final UserEntity user, final UserChangeReason changeReason) {
         log.info("Sending Kafka event about successfully created new user.");
         kafkaProducer.sendUserChangeEvent(
-            CREATED_USER_NOTIFICATION_TOPIC_NAME,
+            userOperationTopicName,
             new UserOperationNotificationEvent(user.getId(), user.getUsername(), user.getBalance(), changeReason)
         );
     }

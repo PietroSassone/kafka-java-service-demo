@@ -1,8 +1,10 @@
 package com.demo.acceptance.tests;
 
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.ContextConfiguration;
 
+import com.demo.acceptance.tests.config.TestConfig;
 import io.cucumber.spring.CucumberContextConfiguration;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
@@ -11,5 +13,6 @@ import io.cucumber.testng.CucumberOptions;
     plugin = {"pretty", "json:target/cucumber-report/cucumber.json"}
 )
 @CucumberContextConfiguration
-public class RunCucumberTestsIT extends AbstractTestNGSpringContextTests {
+@ContextConfiguration(classes = TestConfig.class)
+public class RunCucumberTestsIT extends AbstractTestNGCucumberTests {
 }

@@ -91,8 +91,10 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/{id}")
-    public void deleteProduct(@PathVariable final Long id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable final Long id) {
         log.info("Delete Product Request received for user with id: {}", id);
         productService.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
