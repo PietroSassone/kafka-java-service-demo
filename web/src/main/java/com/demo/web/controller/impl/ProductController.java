@@ -93,6 +93,8 @@ public class ProductController {
     @DeleteMapping("/products/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable final Long id) {
         log.info("Delete Product Request received for user with id: {}", id);
+        final ProductEntity userToDelete = productService.findByProductId(id).orElseThrow(() -> new ProductNotFoundException(id));
+
         productService.deleteById(id);
 
         return ResponseEntity.noContent().build();

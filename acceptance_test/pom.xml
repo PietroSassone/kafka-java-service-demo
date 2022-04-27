@@ -26,7 +26,7 @@
     <jersey.client.version>3.0.4</jersey.client.version>
     <json.assert.version>1.5.0</json.assert.version>
 
-    <CONFIG>dev</CONFIG>
+    <CONFIG>acceptance-test-dev</CONFIG>
   </properties>
 
   <profiles>

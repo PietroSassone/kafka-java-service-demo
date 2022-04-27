@@ -1,5 +1,8 @@
 package com.demo.acceptance.tests.config;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.sql.DataSource;
 
 import org.glassfish.jersey.logging.LoggingFeature;
@@ -16,7 +19,7 @@ import jakarta.ws.rs.client.WebTarget;
 
 @Configuration
 @ComponentScan(basePackages = "com.demo.acceptance.tests")
-@PropertySource("classpath:configuration/acceptance-test-dev.properties")
+@PropertySource("classpath:configuration/${CONFIG:acceptance-test-dev}.properties")
 public class TestConfig {
 
     private static final String BASE_URL_TEMPLATE = "http://%s:%s";
@@ -41,7 +44,9 @@ public class TestConfig {
 
     @Bean
     public WebTarget jerseyRestClient() {
-        return ClientBuilder.newClient().target(String.format(BASE_URL_TEMPLATE, serviceBaseUrl, servicePort)).register(new LoggingFeature());
+        return ClientBuilder.newClient()
+            .target(String.format(BASE_URL_TEMPLATE, serviceBaseUrl, servicePort))
+            .register(new LoggingFeature(Logger.getLogger(TestConfig.class.getName()), Level.INFO, null, null));
     }
 
     @Bean

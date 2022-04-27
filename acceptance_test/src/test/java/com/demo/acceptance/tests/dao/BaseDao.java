@@ -3,6 +3,7 @@ package com.demo.acceptance.tests.dao;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,13 @@ public abstract class BaseDao<T> {
 
     @Transactional(readOnly = true)
     public Optional<T> findResourceById(final Long resourceId) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject(getSqlSelectQueryById(), rowMapper, Objects.requireNonNull(resourceId)));
+        Optional<T> result;
+        try {
+            result = Optional.ofNullable(jdbcTemplate.queryForObject(getSqlSelectQueryById(), rowMapper, Objects.requireNonNull(resourceId)));
+        } catch (EmptyResultDataAccessException exception) {
+            result = Optional.empty();
+        }
+        return result;
     }
 
     @Transactional

@@ -14,6 +14,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class DbTestDataManipulator {
 
@@ -35,10 +38,14 @@ public class DbTestDataManipulator {
                             throw new RuntimeException(exception.getMessage());
                         }
                     });
+                log.info("Inserting record with SQL: {}", preparedStatement);
                 return preparedStatement;
             },
             keyHolder);
 
-        return Objects.requireNonNull(keyHolder.getKey()).longValue();
+        final Long insertedResourceId = Objects.requireNonNull(keyHolder.getKey()).longValue();
+
+        log.info("Newly inserted record id: {}", insertedResourceId);
+        return insertedResourceId;
     }
 }

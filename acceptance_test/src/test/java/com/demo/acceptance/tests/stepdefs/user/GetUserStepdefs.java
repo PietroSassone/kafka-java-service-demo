@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.demo.acceptance.tests.dao.UserDao;
 import com.demo.acceptance.tests.repository.TestDataRepository;
+import com.demo.acceptance.tests.stepdefs.BaseSteps;
 import com.demo.acceptance.tests.util.DbTestDataManipulator;
 import com.demo.acceptance.tests.util.FileReaderUtil;
 import com.demo.acceptance.tests.util.JsonHelper;
@@ -23,9 +24,8 @@ import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class GetUserStepdefs {
+public class GetUserStepdefs extends BaseSteps {
 
-    private static final String NULL_AS_STRING = "null";
     private static final String GET_USER_ENDPOINT_PATH = "/api/user/%s/getUser";
     private static final String TEST_DATA_FOLDER_COMMON = "common";
     private static final String TEST_DATA_FOLDER_USERS = "users";
@@ -74,7 +74,7 @@ public class GetUserStepdefs {
             balance
         );
         this.balance = balance;
-        testDataRepository.setUserId(existingUserId);
+        testDataRepository.setUserId(String.valueOf(existingUserId));
     }
 
     @And("^the username parameter for the request is set to (.*)$")
@@ -103,4 +103,12 @@ public class GetUserStepdefs {
         JSONAssert.assertEquals(expectedResponseJson.toString(), response.readEntity(String.class), JSONCompareMode.LENIENT);
     }
 
+    @Then("^the response body should contain a user not found by (id|userName) message$")
+    public void theResponseShouldContainAUserNotFoundError(final String paramType) {
+        final String expectedError = USER_NAME_NODE_NAME.equals(paramType)
+            ? String.format("Could not find user with username: %s", testDataRepository.getUserName())
+            : String.format("Could not find user with id: %s", testDataRepository.getUserId());
+
+        assertErrorInResponse(expectedError);
+    }
 }

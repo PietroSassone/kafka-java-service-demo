@@ -15,7 +15,7 @@ Feature: Demo service getUser by username endpoint test scenarios
     Given the username parameter for the request is set to <userNameParameter>
     When the getUser endpoint is called
     Then the response status code should be 404
-      And the response body should contain a user not found message
+      And the response body should contain a user not found by userName message
 
    Examples:
     | userNameParameter |

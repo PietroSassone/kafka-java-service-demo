@@ -1,6 +1,6 @@
 @getProduct
 Feature: Demo service getProduct by id endpoint test scenarios
-  Testing the getUser by username endpoint
+  Testing the getProduct by id endpoint
   Endpoint: GET /api/product/{id}/getProduct
   Parameters: product id path variable
 

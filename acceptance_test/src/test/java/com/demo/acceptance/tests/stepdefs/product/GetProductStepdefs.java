@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.demo.acceptance.tests.dao.ProductDao;
 import com.demo.acceptance.tests.repository.TestDataRepository;
+import com.demo.acceptance.tests.stepdefs.BaseSteps;
 import com.demo.acceptance.tests.util.DbTestDataManipulator;
 import com.demo.acceptance.tests.util.FileReaderUtil;
 import com.demo.acceptance.tests.util.JsonHelper;
@@ -21,9 +22,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import jakarta.ws.rs.core.Response;
 
-public class GetProductStepdefs {
+public class GetProductStepdefs extends BaseSteps {
 
-    private static final String NULL_AS_STRING = "null";
     private static final String GET_PRODUCT_ENDPOINT_PATH = "/api/product/%s/getProduct";
     private static final String TEST_DATA_FOLDER_COMMON = "common";
     private static final String TEST_DATA_FOLDER_PRODUCTS = "products";
@@ -75,6 +75,7 @@ public class GetProductStepdefs {
         );
         this.productName = productName;
         this.price = price;
+        testDataRepository.setProductId(String.valueOf(existingProductId));
     }
 
     @And("^the product id parameter for the request is set to (.*)$")
@@ -106,4 +107,8 @@ public class GetProductStepdefs {
         JSONAssert.assertEquals(expectedResponseJson.toString(), response.readEntity(String.class), JSONCompareMode.LENIENT);
     }
 
+    @Then("the response body should contain a product not found message")
+    public void theResponseShouldContainAProductNotFoundError() {
+        assertErrorInResponse(String.format("Could not find product with id: %s", testDataRepository.getProductId()));
+    }
 }

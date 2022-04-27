@@ -11,6 +11,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,6 +40,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException exception, final HttpHeaders headers, final HttpStatus status, final WebRequest webRequest) {
         return createErrorResponse(exception, webRequest, HttpStatus.BAD_REQUEST, exception.getBindingResult().getFieldErrors().get(0).getDefaultMessage());
+    }
+
+    @Override
+    public ResponseEntity<Object> handleHttpMessageNotReadable(final HttpMessageNotReadableException exception, final HttpHeaders headers, final HttpStatus status, final WebRequest webRequest) {
+        return createErrorResponse(exception, webRequest, HttpStatus.BAD_REQUEST, "Incorrect HTTP request was received.");
     }
 
     private ResponseEntity<Object> createErrorResponse(final Exception exception, final WebRequest webRequest, final HttpStatus responseStatus, final String responseMessage) {

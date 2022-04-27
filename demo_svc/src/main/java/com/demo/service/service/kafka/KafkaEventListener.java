@@ -1,4 +1,4 @@
-package com.demo.service.util;
+package com.demo.service.service.kafka;
 
 import java.util.concurrent.CountDownLatch;
 

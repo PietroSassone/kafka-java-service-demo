@@ -49,7 +49,7 @@ public class KafkaTestConfig {
     }
 
     @Bean
-    public KafkaConsumer<Long, UserOperationNotificationEvent> userEventKafkaConsumer() {
+    public KafkaConsumer<String, UserOperationNotificationEvent> userEventKafkaConsumer() {
         return new KafkaConsumer<>(setKafkaConsumerProperties());
     }
 
