@@ -27,6 +27,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Optional<ProductEntity> findByProductName(final String productName) {
+        return productRepository.findByProductName(productName);
+    }
+
+    @Override
     public List<ProductEntity> getAllProducts() {
         return productRepository.findAll();
     }

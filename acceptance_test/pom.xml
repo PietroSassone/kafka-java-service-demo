@@ -25,6 +25,7 @@
     <kafka.client.version>3.1.0</kafka.client.version>
     <jersey.client.version>3.0.4</jersey.client.version>
     <json.assert.version>1.5.0</json.assert.version>
+    <jersey.media.version>3.1.0-M2</jersey.media.version>
 
     <CONFIG>acceptance-test-dev</CONFIG>
   </properties>
@@ -155,6 +156,11 @@
       <groupId>org.glassfish.jersey.inject</groupId>
       <artifactId>jersey-hk2</artifactId>
       <version>${jersey.client.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-json-jackson</artifactId>
+      <version>${jersey.media.version}</version>
     </dependency>
     <dependency>
       <groupId>org.skyscreamer</groupId>

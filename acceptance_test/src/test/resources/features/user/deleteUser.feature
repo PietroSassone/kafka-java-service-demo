@@ -4,7 +4,7 @@ Feature: Demo service deleteUser by id endpoint test scenarios
   Endpoint: DELETE /api/user/users/{id}
   Parameters: id path variable
 
-  @Kafka
+  @KafkaUserEvent
   Scenario: The endpoint should delete existing user
     Given a user exists in the database with name Sierra and a balance of 117
     When the deleteUser endpoint is called

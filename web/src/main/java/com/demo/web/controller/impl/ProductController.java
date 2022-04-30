@@ -3,6 +3,7 @@ package com.demo.web.controller.impl;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,11 @@ public class ProductController {
 
     @PostMapping("/createProduct")
     public ResponseEntity<?> createProduct(@Valid @RequestBody final ProductRequest createProductRequest) {
-        log.info("Create Product Request received: {}", createProductRequest.toString());
+        log.info("Create Product Request received: {}", createProductRequest);
+
+        if (productService.findByProductName(createProductRequest.getProductName()).isPresent()) {
+            throw new DataIntegrityViolationException("Product already exists.");
+        }
 
         final ProductEntity newProduct = new ProductEntity(createProductRequest.getProductName(), createProductRequest.getPrice());
         final ProductModel productModel = productModelAssembler.toModel(productService.saveProduct(newProduct));

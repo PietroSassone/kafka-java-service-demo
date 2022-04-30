@@ -27,12 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 public class GetUserStepdefs extends BaseSteps {
 
     private static final String GET_USER_ENDPOINT_PATH = "/api/user/%s/getUser";
-    private static final String TEST_DATA_FOLDER_COMMON = "common";
     private static final String TEST_DATA_FOLDER_USERS = "users";
     private static final String TEST_DATA_INSERT_FILENAME = "insertUserSql.sql";
-    private static final String EXPECTED_RESPONSE_TEMPLATE = "getEndpointResponseTemplate.json";
-    private static final String ID_NODE_NAME = "id";
-    private static final String USER_NAME_NODE_NAME = "userName";
     private static final String BALANCE_NODE_NAME = "moneyBalance";
 
     private String userName;
@@ -74,7 +70,10 @@ public class GetUserStepdefs extends BaseSteps {
             balance
         );
         this.balance = balance;
+
         testDataRepository.setUserId(String.valueOf(existingUserId));
+        testDataRepository.setUserName(userName);
+        testDataRepository.setUserBalance(balance);
     }
 
     @And("^the username parameter for the request is set to (.*)$")

@@ -16,7 +16,7 @@ public class ProductEntityRowMapper implements RowMapper<ProductEntity> {
     public ProductEntity mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
         return ProductEntity.builder()
             .id(resultSet.getLong("product_id"))
-            .productName(resultSet.getString("productname"))
+            .productName(resultSet.getString("product_name"))
             .price(resultSet.getDouble("price"))
             .build();
     }

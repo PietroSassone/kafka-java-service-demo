@@ -1,5 +1,5 @@
-# kafka-java-service-demo
-A small Java service to demonstrate Spring-boot, REST API & Kafka usage & plus automated API & Kafka testing.
+# kafka-java-rest-service-demo
+A small Java service to demonstrate Spring-boot, REST API & Kafka usage & plus automated REST API & Kafka testing.
 
 **1. Pre-requirements for running the application**
 - Have Maven installed.
@@ -16,10 +16,10 @@ Start Zookeper and Kafka, can be done either by:
   * Installing and starting them separately based on the official Apache Kafka guide.  
   * Or launching the docker compose file in the root folder of this repository. From cmd, via ```docker-compose.yaml up```.    
 
-#Swagger UI link:
+#Swagger UI link:  
 http://localhost:8080/swagger-ui.html
 
-#Running the acceptance tests
+#Running the acceptance tests  
 As a pre-requirement, the service with the local Kafka and Zookeeper should already be running.  
 
 To start the tests, use the following command from the acceptance test module ic a cmd:  

@@ -1,4 +1,4 @@
-package com.demo.service.util;
+package com.demo.service.service.kafka;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class KafkaProducer {
 
     @Autowired
-    private final KafkaTemplate<String, UserOperationNotificationEvent> userOperationNotificationKafkaTemplate;
+    private final KafkaTemplate<Long, UserOperationNotificationEvent> userOperationNotificationKafkaTemplate;
 
     public void sendUserChangeEvent(final String topicName, final UserOperationNotificationEvent event) {
         userOperationNotificationKafkaTemplate.send(topicName, event).addCallback(

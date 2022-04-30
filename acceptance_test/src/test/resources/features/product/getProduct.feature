@@ -22,6 +22,6 @@ Feature: Demo service getProduct by id endpoint test scenarios
     Then the response status code should be 400
 
      Examples:
-      | productIdValue |
-      | Ukulele        |
-      | null           |
+       | productIdValue |
+       | Ukulele        |
+       | null           |

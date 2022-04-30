@@ -25,13 +25,7 @@ import jakarta.ws.rs.core.Response;
 public class GetProductStepdefs extends BaseSteps {
 
     private static final String GET_PRODUCT_ENDPOINT_PATH = "/api/product/%s/getProduct";
-    private static final String TEST_DATA_FOLDER_COMMON = "common";
-    private static final String TEST_DATA_FOLDER_PRODUCTS = "products";
     private static final String TEST_DATA_INSERT_FILENAME = "insertProductSql.sql";
-    private static final String EXPECTED_RESPONSE_TEMPLATE = "getEndpointResponseTemplate.json";
-    private static final String ID_NODE_NAME = "id";
-    private static final String PRODUCT_NAME_NODE_NAME = "productName";
-    private static final String PRICE_NODE_NAME = "price";
 
     private String productId;
     private String productName;
@@ -98,7 +92,7 @@ public class GetProductStepdefs extends BaseSteps {
     public void theResponseShouldContainTheExpectedProduct() throws JSONException {
         final ObjectNode expectedResponseJson = fileReader.readFileToJsonNode(EXPECTED_RESPONSE_TEMPLATE, TEST_DATA_FOLDER_COMMON);
 
-        expectedResponseJson.put(ID_NODE_NAME, existingProductId);
+        expectedResponseJson.put(ID_NODE_NAME, testDataRepository.getProductId());
         expectedResponseJson.put(PRODUCT_NAME_NODE_NAME, productName);
         expectedResponseJson.put(PRICE_NODE_NAME, price);
 

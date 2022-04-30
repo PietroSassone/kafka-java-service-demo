@@ -11,6 +11,8 @@ public interface ProductService {
 
     Optional<ProductEntity> findByProductId(Long id);
 
+    Optional<ProductEntity> findByProductName(String userName);
+
     List<ProductEntity> getAllProducts();
 
     void deleteById(Long id);

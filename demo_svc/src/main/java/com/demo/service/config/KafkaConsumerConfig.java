@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.LongDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,18 +28,18 @@ public class KafkaConsumerConfig {
     @Value(value = "${purchase.topic.group.id:purchaseEventGroup}")
     private String purchaseTopicGroupId;
 
-    public ConsumerFactory<String, PurchaseEvent> purchaseEventConsumerFactory() {
+    public ConsumerFactory<Long, PurchaseEvent> purchaseEventConsumerFactory() {
         final Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, purchaseTopicGroupId);
         props.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, PARTITION_BYTE_SIZE_CONFIG);
         props.put(ConsumerConfig.FETCH_MAX_BYTES_CONFIG, PARTITION_BYTE_SIZE_CONFIG);
-        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(PurchaseEvent.class));
+        return new DefaultKafkaConsumerFactory<>(props, new LongDeserializer(), new JsonDeserializer<>(PurchaseEvent.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, PurchaseEvent> purchaseEventKafkaListenerContainerFactory() {
-        final ConcurrentKafkaListenerContainerFactory<String, PurchaseEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<Long, PurchaseEvent> purchaseEventKafkaListenerContainerFactory() {
+        final ConcurrentKafkaListenerContainerFactory<Long, PurchaseEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(purchaseEventConsumerFactory());
         return factory;
     }

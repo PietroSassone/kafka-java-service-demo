@@ -12,13 +12,14 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>acceptance_test/target/logs/acceptance-test.log</file>
+        <file>target/logs/acceptance-test.log</file>
         <encoder>
             <pattern>%date %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
     <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.testng.internal.Utils" level="ERROR"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

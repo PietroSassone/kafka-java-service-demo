@@ -17,7 +17,7 @@ Feature: Demo service getUser by username endpoint test scenarios
     Then the response status code should be 404
       And the response body should contain a user not found by userName message
 
-   Examples:
-    | userNameParameter |
-    | Medved            |
-    | null              |
+    Examples:
+      | userNameParameter |
+      | Medved            |
+      | null              |

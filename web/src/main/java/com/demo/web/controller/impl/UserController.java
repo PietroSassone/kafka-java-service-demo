@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.HttpStatus;
@@ -22,12 +23,11 @@ import com.demo.service.events.UserOperationNotificationEvent;
 import com.demo.service.exception.UserNotFoundException;
 import com.demo.service.model.UserModel;
 import com.demo.service.service.UserService;
-import com.demo.service.util.KafkaProducer;
+import com.demo.service.service.kafka.KafkaProducer;
 import com.demo.web.controller.assembler.UserModelAssembler;
 import com.demo.web.entity.UserEntity;
 import com.demo.web.payload.request.CreateUserRequest;
 import com.demo.web.payload.request.UpdateUserRequest;
-import com.demo.web.payload.response.MessageResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -52,10 +52,10 @@ public class UserController {
 
     @PostMapping("/createUser")
     public ResponseEntity<?> createUser(@Valid @RequestBody final CreateUserRequest createUserRequest) {
-        log.info("Create User Request received: {}", createUserRequest.toString());
+        log.info("Create User Request received: {}", createUserRequest);
 
         if (userService.findByUserName(createUserRequest.getUsername()).isPresent()) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+            throw new DataIntegrityViolationException("User already exists.");
         }
 
         final UserEntity newUser = new UserEntity(createUserRequest.getUsername(), createUserRequest.getMoneyBalance());
