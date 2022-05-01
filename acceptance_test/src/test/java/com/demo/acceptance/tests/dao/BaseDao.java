@@ -31,7 +31,7 @@ public abstract class BaseDao<T> {
 
     @Transactional
     public void deleteResourceById(final Long resourceId) {
-        log.info("Deleting resource with is {}", Objects.requireNonNull(resourceId));
+        log.info("Deleting resource with id {}", Objects.requireNonNull(resourceId));
         jdbcTemplate.update(getSqlDeleteQueryById(), resourceId);
     }
 

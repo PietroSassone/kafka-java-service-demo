@@ -24,7 +24,7 @@ import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class GetUserStepdefs extends BaseSteps {
+public class GetUserStepDefs extends BaseSteps {
 
     private static final String GET_USER_ENDPOINT_PATH = "/api/user/%s/getUser";
     private static final String TEST_DATA_FOLDER_USERS = "users";

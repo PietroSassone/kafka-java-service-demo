@@ -3,6 +3,7 @@ package com.demo.acceptance.tests.stepdefs.product;
 import java.util.Map;
 import java.util.Objects;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,15 +11,12 @@ import com.demo.acceptance.tests.dao.ProductDao;
 import com.demo.acceptance.tests.repository.TestDataRepository;
 import com.demo.acceptance.tests.stepdefs.BaseSteps;
 import com.demo.acceptance.tests.util.FileReaderUtil;
-import com.demo.acceptance.tests.util.JsonHelper;
 import com.demo.acceptance.tests.util.RequestUtil;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.cucumber.java.After;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import jakarta.ws.rs.core.Response;
 
 public class CreateProductStepDefs extends BaseSteps {
 
@@ -37,9 +35,6 @@ public class CreateProductStepDefs extends BaseSteps {
         NEGATIVE_PRICE, PRICE_IS_NEGATIVE_ERROR
     );
 
-    private String name;
-    private String price;
-    private Response response;
     private ObjectNode request;
 
     @Autowired
@@ -52,42 +47,41 @@ public class CreateProductStepDefs extends BaseSteps {
     private FileReaderUtil fileReader;
 
     @Autowired
-    private JsonHelper jsonHelper;
-
-    @Autowired
     private ProductDao productDao;
-
-    @Before("@createProduct")
-    public void prepareTestData() {
-        request = fileReader.readFileToJsonNode(REQUEST_TEMPLATE, TEST_DATA_FOLDER_PRODUCTS);
-    }
 
     @After("@createProduct")
     public void afterTest() {
-        final String productId = testDataRepository.getProductId();
+        testDataRepository.getProductIds().forEach(productId -> {
+            if (Objects.nonNull(productId)) {
+                productDao.deleteResourceById(Long.parseLong(productId));
+            }
+        });
+    }
 
-        if (Objects.nonNull(productId)) {
-            productDao.deleteResourceById(Long.parseLong(productId));
-        }
+    @Given("a product request is created")
+    public void aProductRequestIsCreated() {
+        request = fileReader.readFileToJsonNode(REQUEST_TEMPLATE, TEST_DATA_FOLDER_PRODUCTS);
+        testDataRepository.setRequestAsJson(request);
     }
 
     @Given("^the productName value for the request is set to (.*)$")
     public void theProductNameIsSet(final String nameToSet) {
-        name = keepStringOrSetToNull(nameToSet);
+        testDataRepository.setProductName(keepStringOrSetToNull(nameToSet));
     }
 
     @Given("^the price value for the request is set to (.*)$")
     public void thePriceIsSet(final String priceToSet) {
-        price = keepStringOrSetToNull(priceToSet);
+        final String price = keepStringOrSetToNull(priceToSet);
+        testDataRepository.setPriceAsString(price);
+
+        if (NumberUtils.isCreatable(price)) {
+            testDataRepository.setPrice(Double.valueOf(price));
+        }
     }
 
     @When("the createProduct endpoint is called")
     public void callTheCreateProductEndpoint() {
-        request.put(PRODUCT_NAME_NODE_NAME, name);
-        request.put(PRICE_NODE_NAME, price);
-
-        response = requestUtil.executePostRequest(CREATE_PRODUCT_ENDPOINT_PATH, String.valueOf(request));
-        testDataRepository.setResponse(response);
+        testDataRepository.setResponse(requestUtil.executePostRequest(CREATE_PRODUCT_ENDPOINT_PATH, prepareProductRequest(request)));
     }
 
     @Then("the response body should contain the new product")
@@ -95,12 +89,14 @@ public class CreateProductStepDefs extends BaseSteps {
         prepareCommonExpectedResponseJson();
 
         final ObjectNode expectedResponseJson = testDataRepository.getExpectedResponse();
+        expectedResponseJson.put(PRODUCT_NAME_NODE_NAME, testDataRepository.getProductName());
+        expectedResponseJson.put(PRICE_NODE_NAME, Double.valueOf(testDataRepository.getPriceAsString()));
 
-        expectedResponseJson.put(PRODUCT_NAME_NODE_NAME, name);
-        expectedResponseJson.put(PRICE_NODE_NAME, Double.valueOf(price));
-        final ObjectNode actualResponseJson = response.readEntity(ObjectNode.class);
+        final ObjectNode actualResponseJson = testDataRepository.getResponse().readEntity(ObjectNode.class);
+        final String createdProductId = actualResponseJson.get(ID_NODE_NAME).asText();
 
-        testDataRepository.setProductId(actualResponseJson.get(ID_NODE_NAME).asText());
+        testDataRepository.setProductId(createdProductId);
+        testDataRepository.getProductIds().add(createdProductId);
 
         assertNewResourceInResponseJson(expectedResponseJson, actualResponseJson);
     }

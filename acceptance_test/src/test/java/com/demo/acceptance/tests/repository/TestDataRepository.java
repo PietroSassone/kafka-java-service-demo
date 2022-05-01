@@ -1,5 +1,8 @@
 package com.demo.acceptance.tests.repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -16,18 +19,30 @@ public class TestDataRepository {
 
     private Response response;
     private ObjectNode expectedResponse;
+    private ObjectNode requestAsJson;
     private String productId;
+    private List<String> productIds = new ArrayList<>();
     private String userId;
     private String userName;
     private Double userBalance;
+    private String productName;
+    private Double price;
+    private String priceAsString;
+    private String resourceSelfLink;
 
     public void resetTestDataRepository() {
         log.info("Resetting saved test data after a test.");
         response = null;
         expectedResponse = null;
+        requestAsJson = null;
         productId = null;
+        productIds.clear();
         userId = null;
         userName = null;
         userBalance = null;
+        productName = null;
+        price = null;
+        priceAsString = null;
+        resourceSelfLink = null;
     }
 }

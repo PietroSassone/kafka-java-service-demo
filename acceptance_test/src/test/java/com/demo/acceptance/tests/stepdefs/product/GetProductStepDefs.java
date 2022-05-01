@@ -22,17 +22,13 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import jakarta.ws.rs.core.Response;
 
-public class GetProductStepdefs extends BaseSteps {
+public class GetProductStepDefs extends BaseSteps {
 
     private static final String GET_PRODUCT_ENDPOINT_PATH = "/api/product/%s/getProduct";
     private static final String TEST_DATA_INSERT_FILENAME = "insertProductSql.sql";
 
     private String productId;
-    private String productName;
-    private String formattedEndpointPath;
-    private Response response;
     private Long existingProductId;
-    private Double price;
 
     @Autowired
     private RequestUtil requestUtil;
@@ -67,9 +63,13 @@ public class GetProductStepdefs extends BaseSteps {
             productName,
             price
         );
-        this.productName = productName;
-        this.price = price;
-        testDataRepository.setProductId(String.valueOf(existingProductId));
+
+        final String productId = String.valueOf(existingProductId);
+
+        testDataRepository.setProductId(productId);
+        testDataRepository.getProductIds().add(productId);
+        testDataRepository.setProductName(productName);
+        testDataRepository.setPrice(price);
     }
 
     @And("^the product id parameter for the request is set to (.*)$")
@@ -80,25 +80,26 @@ public class GetProductStepdefs extends BaseSteps {
 
     @When("the getProduct endpoint is called")
     public void callTheGetProductEndpoint() {
-        formattedEndpointPath = String.format(
+        final String requestUrl = String.format(
             GET_PRODUCT_ENDPOINT_PATH,
             Objects.isNull(existingProductId) ? productId : existingProductId
         );
-        response = requestUtil.executeGetRequest(formattedEndpointPath);
-        testDataRepository.setResponse(response);
+
+        testDataRepository.setResourceSelfLink(requestUrl);
+        testDataRepository.setResponse(requestUtil.executeGetRequest(requestUrl));
     }
 
     @Then("the response body should contain the correct product")
     public void theResponseShouldContainTheExpectedProduct() throws JSONException {
         final ObjectNode expectedResponseJson = fileReader.readFileToJsonNode(EXPECTED_RESPONSE_TEMPLATE, TEST_DATA_FOLDER_COMMON);
 
-        expectedResponseJson.put(ID_NODE_NAME, testDataRepository.getProductId());
-        expectedResponseJson.put(PRODUCT_NAME_NODE_NAME, productName);
-        expectedResponseJson.put(PRICE_NODE_NAME, price);
+        expectedResponseJson.put(ID_NODE_NAME, Long.valueOf(testDataRepository.getProductId()));
+        expectedResponseJson.put(PRODUCT_NAME_NODE_NAME, testDataRepository.getProductName());
+        expectedResponseJson.put(PRICE_NODE_NAME, testDataRepository.getPrice());
 
-        jsonHelper.setRestResponseLink(expectedResponseJson, formattedEndpointPath);
+        jsonHelper.setRestResponseLink(expectedResponseJson, testDataRepository.getResourceSelfLink());
 
-        JSONAssert.assertEquals(expectedResponseJson.toString(), response.readEntity(String.class), JSONCompareMode.LENIENT);
+        JSONAssert.assertEquals(expectedResponseJson.toString(), testDataRepository.getResponse().readEntity(String.class), JSONCompareMode.LENIENT);
     }
 
     @Then("the response body should contain a product not found message")
