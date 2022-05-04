@@ -9,7 +9,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class CreateUserRequest extends UserOperationRequest {
 
-    public CreateUserRequest(final String username, final double balance) {
-        super(username, balance);
+    public CreateUserRequest(final String userName, final double balance) {
+        super(userName, balance);
     }
 }

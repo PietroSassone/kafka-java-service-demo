@@ -81,7 +81,7 @@ public class CreateProductStepDefs extends BaseSteps {
 
     @When("the createProduct endpoint is called")
     public void callTheCreateProductEndpoint() {
-        testDataRepository.setResponse(requestUtil.executePostRequest(CREATE_PRODUCT_ENDPOINT_PATH, prepareProductRequest(request)));
+        testDataRepository.setResponse(requestUtil.executePostRequest(CREATE_PRODUCT_ENDPOINT_PATH, prepareProductRequestBody(request)));
     }
 
     @Then("the response body should contain the new product")
@@ -102,7 +102,7 @@ public class CreateProductStepDefs extends BaseSteps {
     }
 
     @Then("^the response body should contain a (product name out of bounds|price too big|negative price) error")
-    public void theResponseShouldContainAProductNameError(final String errorType) {
+    public void theResponseShouldContainAProductControllerError(final String errorType) {
         assertErrorInResponse(EXPECTED_ERRORS_MAP.get(errorType));
     }
 }

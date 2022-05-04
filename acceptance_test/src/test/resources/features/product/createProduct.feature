@@ -31,19 +31,19 @@ Testing the create product endpoint
       And the response body should contain a resource already exists error
 
   Scenario Outline: The endpoint should return a bad request on too long/null/short product name
-    Given the productName value for the request is set to <productNameValue>
+    Given the productName value for the request is set to <productName>
       And the price value for the request is set to 100
    When the createProduct endpoint is called
    Then the response status code should be 400
      And the response body should contain a product name out of bounds error
 
    Examples:
-     | productNameValue                                    |
+     | productName                                         |
      | PC                                                  |
      | null                                                |
      | a_long_product_name_that_is_more_than_50_chars_by_1 |
 
-  Scenario Outline: The endpoint should return a bad request on too long/short/null product name
+  Scenario Outline: The endpoint should return a bad request on invalid price
     Given the productName value for the request is set to choccy moo moo juice
       And the price value for the request is set to <priceValue>
     When the createProduct endpoint is called

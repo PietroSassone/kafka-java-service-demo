@@ -27,15 +27,12 @@ import lombok.extern.slf4j.Slf4j;
 public class GetUserStepDefs extends BaseSteps {
 
     private static final String GET_USER_ENDPOINT_PATH = "/api/user/%s/getUser";
-    private static final String TEST_DATA_FOLDER_USERS = "users";
     private static final String TEST_DATA_INSERT_FILENAME = "insertUserSql.sql";
-    private static final String BALANCE_NODE_NAME = "moneyBalance";
 
     private String userName;
     private String formattedEndpointPath;
     private Response response;
     private Long existingUserId;
-    private Double balance;
 
     @Autowired
     private RequestUtil requestUtil;
@@ -69,22 +66,25 @@ public class GetUserStepDefs extends BaseSteps {
             userName,
             balance
         );
-        this.balance = balance;
+        final String userId = String.valueOf(existingUserId);
 
-        testDataRepository.setUserId(String.valueOf(existingUserId));
+        testDataRepository.setUserId(userId);
+        testDataRepository.getUserIds().add(userId);
         testDataRepository.setUserName(userName);
         testDataRepository.setUserBalance(balance);
     }
 
     @And("^the username parameter for the request is set to (.*)$")
     public void theUserNameIsSet(final String userNameToSet) {
-        userName = NULL_AS_STRING.equals(userNameToSet) ? null : userNameToSet;
+        userName = keepStringOrSetToNull(userNameToSet);
         testDataRepository.setUserName(userName);
+
+        formattedEndpointPath = String.format(GET_USER_ENDPOINT_PATH, userName);
+        testDataRepository.setResourceSelfLink(formattedEndpointPath);
     }
 
     @When("the getUser endpoint is called")
     public void callTheGetUserEndpoint() {
-        formattedEndpointPath = String.format(GET_USER_ENDPOINT_PATH, userName);
         response = requestUtil.executeGetRequest(formattedEndpointPath);
         testDataRepository.setResponse(response);
     }
@@ -93,13 +93,13 @@ public class GetUserStepDefs extends BaseSteps {
     public void theResponseShouldContainTheExpectedUser() throws JSONException {
         final ObjectNode expectedResponseJson = fileReader.readFileToJsonNode(EXPECTED_RESPONSE_TEMPLATE, TEST_DATA_FOLDER_COMMON);
 
-        expectedResponseJson.put(ID_NODE_NAME, existingUserId);
-        expectedResponseJson.put(USER_NAME_NODE_NAME, userName);
-        expectedResponseJson.put(BALANCE_NODE_NAME, balance);
+        expectedResponseJson.put(ID_NODE_NAME, Long.valueOf(testDataRepository.getUserId()));
+        expectedResponseJson.put(USER_NAME_NODE_NAME, testDataRepository.getUserName());
+        expectedResponseJson.put(BALANCE_NODE_NAME, testDataRepository.getUserBalance());
 
-        jsonHelper.setRestResponseLink(expectedResponseJson, formattedEndpointPath);
+        jsonHelper.setRestResponseLink(expectedResponseJson, testDataRepository.getResourceSelfLink());
 
-        JSONAssert.assertEquals(expectedResponseJson.toString(), response.readEntity(String.class), JSONCompareMode.LENIENT);
+        JSONAssert.assertEquals(expectedResponseJson.toString(), testDataRepository.getResponse().readEntity(String.class), JSONCompareMode.LENIENT);
     }
 
     @Then("^the response body should contain a user not found by (id|userName) message$")

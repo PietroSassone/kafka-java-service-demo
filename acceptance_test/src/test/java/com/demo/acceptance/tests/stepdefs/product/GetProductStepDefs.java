@@ -74,7 +74,7 @@ public class GetProductStepDefs extends BaseSteps {
 
     @And("^the product id parameter for the request is set to (.*)$")
     public void theProductIdIsSet(final String idToSet) {
-        productId = NULL_AS_STRING.equals(idToSet) ? null : idToSet;
+        productId = keepStringOrSetToNull(idToSet);
         testDataRepository.setProductId(productId);
     }
 

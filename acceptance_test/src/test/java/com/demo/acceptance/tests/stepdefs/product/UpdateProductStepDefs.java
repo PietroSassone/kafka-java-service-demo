@@ -23,6 +23,8 @@ public class UpdateProductStepDefs extends BaseSteps {
 
         testDataRepository.setResourceSelfLink(String.format(SELF_LINK_TEMPLATE, productId));
 
-        testDataRepository.setResponse(requestUtil.executePutRequest(String.format(UPDATE_PRODUCT_ENDPOINT_PATH, productId), prepareProductRequest(testDataRepository.getRequestAsJson())));
+        testDataRepository.setResponse(
+            requestUtil.executePutRequest(String.format(UPDATE_PRODUCT_ENDPOINT_PATH, productId), prepareProductRequestBody(testDataRepository.getRequestAsJson()))
+        );
     }
 }

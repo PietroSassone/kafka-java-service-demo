@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class UpdateUserRequest extends UserOperationRequest {
 
-    @NotNull(message = "Reason for user change must be one of: USER_CREATED, USER_NAME_CHANGE, BALANCE_REDUCED, BALANCE_INCREASED!")
+    @NotNull
     private UserChangeReason changeReason;
 
     public UpdateUserRequest(final String username, final double balance, final UserChangeReason changeReason) {

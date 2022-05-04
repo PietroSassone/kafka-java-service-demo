@@ -66,7 +66,7 @@ public class ProductController {
                 return productService.saveProduct(product);
             })
             .orElseGet(() -> {
-                log.warn("The product form the update request does not exist. Creating it now.");
+                log.warn("The product from the update request does not exist. Creating it now.");
                 final ProductEntity newProduct = new ProductEntity(productRequest.getProductName(), productRequest.getPrice());
                 newProduct.setId(id);
                 return productService.saveProduct(newProduct);

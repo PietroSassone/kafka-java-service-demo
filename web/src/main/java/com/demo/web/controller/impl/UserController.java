@@ -1,5 +1,7 @@
 package com.demo.web.controller.impl;
 
+import java.util.Random;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,11 +56,11 @@ public class UserController {
     public ResponseEntity<?> createUser(@Valid @RequestBody final CreateUserRequest createUserRequest) {
         log.info("Create User Request received: {}", createUserRequest);
 
-        if (userService.findByUserName(createUserRequest.getUsername()).isPresent()) {
+        if (userService.findByUserName(createUserRequest.getUserName()).isPresent()) {
             throw new DataIntegrityViolationException("User already exists.");
         }
 
-        final UserEntity newUser = new UserEntity(createUserRequest.getUsername(), createUserRequest.getMoneyBalance());
+        final UserEntity newUser = new UserEntity(createUserRequest.getUserName(), createUserRequest.getMoneyBalance());
         final UserModel userModel = userModelAssembler.toModel(userService.saveUser(newUser));
 
         sendUserOperationNotificationToKafka(newUser, UserChangeReason.USER_CREATED);
@@ -75,14 +77,14 @@ public class UserController {
         final UserChangeReason[] userChangeReason = new UserChangeReason[1];
         final UserEntity updatedUser = userService.findByUserId(id)
             .map(user -> {
-                user.setUsername(updateUserRequest.getUsername());
+                user.setUsername(updateUserRequest.getUserName());
                 user.setBalance(updateUserRequest.getMoneyBalance());
                 userChangeReason[0] = UserChangeReason.USER_CREATED;
                 return userService.saveUser(user);
             })
             .orElseGet(() -> {
-                log.warn("The user form the update request does not exist. Creating it now.");
-                final UserEntity newUser = new UserEntity(updateUserRequest.getUsername(), updateUserRequest.getMoneyBalance());
+                log.warn("The user from the update request does not exist. Creating it now.");
+                final UserEntity newUser = new UserEntity(updateUserRequest.getUserName(), updateUserRequest.getMoneyBalance());
                 newUser.setId(id);
                 userChangeReason[0] = updateUserRequest.getChangeReason();
                 return userService.saveUser(newUser);
@@ -128,7 +130,7 @@ public class UserController {
         log.info("Sending Kafka event about successfully created new user.");
         kafkaProducer.sendUserChangeEvent(
             userOperationTopicName,
-            new UserOperationNotificationEvent(user.getId(), user.getUsername(), user.getBalance(), changeReason)
+            new UserOperationNotificationEvent(new Random().nextLong(), user.getId(), user.getUsername(), user.getBalance(), changeReason)
         );
     }
 }

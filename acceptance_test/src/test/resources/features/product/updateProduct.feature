@@ -21,11 +21,11 @@ Testing the update product endpoint
 
     Examples:
      | productName                                         | price       |
-     | Deo                                                 | 0.0         |
-     | exactly the maximum 50 characters long name string  | 100000000.0 |
+     | Pen                                                 | 0.0         |
+     | exactly the maximum 50 characters long user string  | 100000000.0 |
 
   Scenario: The endpoint should update product if it already exists with the given id
-    Given a product exists in the database with name Book part 1 and a price of 999
+    Given a product exists in the database with name Book part 2 and a price of 999
       And the productName value for the request is set to <newProductName>
       And the price value for the request is set to <newPrice>
     When the updateProduct endpoint is called with the id of the existing product
@@ -35,32 +35,32 @@ Testing the update product endpoint
 
     Examples:
       | newProductName            | newPrice  |
-      | Book part 1               | 999       |
-      | Book part 1 with subtitle | 1500.0001 |
+      | Book part 2               | 999       |
+      | Book part 2 with subtitle | 1500.0001 |
 
   Scenario: The endpoint should return not acceptable response instead of creating product if another product already exists with given name
-    Given a product exists in the database with name shoe and a price of 999
+    Given a product exists in the database with name keyboard and a price of 999
       And the product id parameter for the request is set to 5000
-      And the productName value for the request is set to shoe
+      And the productName value for the request is set to keyboard
       And the price value for the request is set to 0
     When the updateProduct endpoint is called
     Then the response status code should be 406
       And the response body should contain a resource already exists error
 
   Scenario Outline: The endpoint should return a bad request on too long/null/short product name
-    Given the productName value for the request is set to <productNameValue>
+    Given the productName value for the request is set to <productName>
       And the price value for the request is set to 100
    When the updateProduct endpoint is called
    Then the response status code should be 400
      And the response body should contain a product name out of bounds error
 
    Examples:
-     | productNameValue                                    |
+     | productName                                         |
      | PC                                                  |
      | null                                                |
      | a_long_product_name_that_is_more_than_50_chars_by_1 |
 
-  Scenario Outline: The endpoint should return a bad request on too long/short/null product name
+  Scenario Outline: The endpoint should return a bad request on invalid price
     Given the productName value for the request is set to choccy moo moo juice
       And the price value for the request is set to <priceValue>
     When the updateProduct endpoint is called

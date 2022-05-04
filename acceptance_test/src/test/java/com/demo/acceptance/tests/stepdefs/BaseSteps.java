@@ -16,14 +16,17 @@ import com.demo.acceptance.tests.util.FileReaderUtil;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class BaseSteps {
+    private static final String LINKS_NODE_NAME = "_links";
+    
     protected static final String NULL_AS_STRING = "null";
     protected static final String USER_NAME_NODE_NAME = "userName";
+    protected static final String BALANCE_NODE_NAME = "moneyBalance";
     protected static final String ID_NODE_NAME = "id";
-    protected static final String LINKS_NODE_NAME = "_links";
     protected static final String TEST_DATA_FOLDER_COMMON = "common";
     protected static final String PRODUCT_NAME_NODE_NAME = "productName";
     protected static final String PRICE_NODE_NAME = "price";
     protected static final String TEST_DATA_FOLDER_PRODUCTS = "products";
+    protected static final String TEST_DATA_FOLDER_USERS = "users";
     protected static final String EXPECTED_RESPONSE_TEMPLATE = "getEndpointResponseTemplate.json";
 
     @Autowired
@@ -48,7 +51,14 @@ public class BaseSteps {
         testDataRepository.setExpectedResponse(fileReader.readFileToJsonNode(EXPECTED_RESPONSE_TEMPLATE, TEST_DATA_FOLDER_COMMON));
     }
 
-    protected String prepareProductRequest(final ObjectNode request) {
+    protected ObjectNode prepareUserRequestBody(final ObjectNode request) {
+        request.put(USER_NAME_NODE_NAME, testDataRepository.getUserName());
+        request.put(BALANCE_NODE_NAME, testDataRepository.getUserBalanceAsString());
+
+        return request;
+    }
+
+    protected String prepareProductRequestBody(final ObjectNode request) {
         request.put(PRODUCT_NAME_NODE_NAME, testDataRepository.getProductName());
         request.put(PRICE_NODE_NAME, testDataRepository.getPriceAsString());
 
