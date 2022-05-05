@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,9 +17,12 @@ public class FileReaderUtil {
     private static final String FILE_PATH_TEMPLATE = "testdata/%s/%s";
     private static final String DELIMITER = "\n";
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     public ObjectNode readFileToJsonNode(final String file, final String locationFolder) {
         try (final InputStream fileInputStream = this.getClass().getClassLoader().getResourceAsStream(String.format(FILE_PATH_TEMPLATE, locationFolder, file))) {
-            return (ObjectNode) new ObjectMapper().readTree(fileInputStream);
+            return (ObjectNode) objectMapper.readTree(fileInputStream);
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }

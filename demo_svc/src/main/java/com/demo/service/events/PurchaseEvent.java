@@ -1,21 +1,25 @@
 package com.demo.service.events;
 
-import java.util.Map;
+import java.util.List;
 
-import com.demo.web.entity.ProductEntity;
+import com.demo.service.model.PurchaseDetail;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
-@AllArgsConstructor
 @ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class PurchaseEvent {
 
-    private final long eventId;
-    private final long userId;
-    private final Map<ProductEntity, Integer> productsWithQuantities;
-    private final Double totalValue;
+    private long eventId;
+    private long userId;
+    private List<PurchaseDetail> purchaseDetails;
+    private Double totalValue;
 }

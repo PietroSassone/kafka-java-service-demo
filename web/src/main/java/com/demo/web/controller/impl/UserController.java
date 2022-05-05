@@ -79,14 +79,14 @@ public class UserController {
             .map(user -> {
                 user.setUsername(updateUserRequest.getUserName());
                 user.setBalance(updateUserRequest.getMoneyBalance());
-                userChangeReason[0] = UserChangeReason.USER_CREATED;
+                userChangeReason[0] = updateUserRequest.getChangeReason();
                 return userService.saveUser(user);
             })
             .orElseGet(() -> {
                 log.warn("The user from the update request does not exist. Creating it now.");
                 final UserEntity newUser = new UserEntity(updateUserRequest.getUserName(), updateUserRequest.getMoneyBalance());
                 newUser.setId(id);
-                userChangeReason[0] = updateUserRequest.getChangeReason();
+                userChangeReason[0] = UserChangeReason.USER_CREATED;
                 return userService.saveUser(newUser);
             });
 

@@ -20,7 +20,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -28,10 +27,10 @@ public class GetUserStepDefs extends BaseSteps {
 
     private static final String GET_USER_ENDPOINT_PATH = "/api/user/%s/getUser";
     private static final String TEST_DATA_INSERT_FILENAME = "insertUserSql.sql";
+    private static final String SPACE = " ";
+    private static final String SPACE_HEXA = "%20";
 
-    private String userName;
     private String formattedEndpointPath;
-    private Response response;
     private Long existingUserId;
 
     @Autowired
@@ -76,7 +75,7 @@ public class GetUserStepDefs extends BaseSteps {
 
     @And("^the username parameter for the request is set to (.*)$")
     public void theUserNameIsSet(final String userNameToSet) {
-        userName = keepStringOrSetToNull(userNameToSet);
+        final String userName = keepStringOrSetToNull(userNameToSet);
         testDataRepository.setUserName(userName);
 
         formattedEndpointPath = String.format(GET_USER_ENDPOINT_PATH, userName);
@@ -85,8 +84,7 @@ public class GetUserStepDefs extends BaseSteps {
 
     @When("the getUser endpoint is called")
     public void callTheGetUserEndpoint() {
-        response = requestUtil.executeGetRequest(formattedEndpointPath);
-        testDataRepository.setResponse(response);
+        testDataRepository.setResponse(requestUtil.executeGetRequest(formattedEndpointPath));
     }
 
     @Then("the response body should contain the correct user info")
@@ -97,7 +95,7 @@ public class GetUserStepDefs extends BaseSteps {
         expectedResponseJson.put(USER_NAME_NODE_NAME, testDataRepository.getUserName());
         expectedResponseJson.put(BALANCE_NODE_NAME, testDataRepository.getUserBalance());
 
-        jsonHelper.setRestResponseLink(expectedResponseJson, testDataRepository.getResourceSelfLink());
+        jsonHelper.setRestResponseLink(expectedResponseJson, testDataRepository.getResourceSelfLink().replaceAll(SPACE, SPACE_HEXA));
 
         JSONAssert.assertEquals(expectedResponseJson.toString(), testDataRepository.getResponse().readEntity(String.class), JSONCompareMode.LENIENT);
     }

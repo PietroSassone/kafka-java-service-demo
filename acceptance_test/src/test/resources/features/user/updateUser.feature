@@ -1,4 +1,4 @@
-@updateUser @createUser @KafkaUserEvent @test
+@updateUser @createUser @KafkaUserEvent
 Feature: Demo service update user endpoint test scenarios
 Testing the update user endpoint
   Endpoint: POST /api/user/users/{id}
@@ -27,7 +27,6 @@ Testing the update user endpoint
       | Summer               | 0.0             |
       | exactly 20 chars lon | 1000000000000.0 |
 
-  @KafkaUserEvent
   Scenario: The endpoint should update user if it already exists with the given id
     Given a user exists in the database with name Gandalf the Grey and a balance of 100000
       And the userName value for the request is set to <newUserName>

@@ -12,6 +12,7 @@ import io.cucumber.java.en.When;
 public class UpdateUserStepDefs extends BaseSteps {
     private static final String UPDATE_USER_ENDPOINT_PATH = "/api/user/users/%s";
     private static final String CHANGE_REASON_NODE_NAME = "changeReason";
+    private static final String SELF_LINK_TEMPLATE = "/api/user/%s/getUser";
 
     private String userChangeReason;
 
@@ -31,6 +32,7 @@ public class UpdateUserStepDefs extends BaseSteps {
         final ObjectNode request = prepareUserRequestBody(testDataRepository.getRequestAsJson());
 
         request.put(CHANGE_REASON_NODE_NAME, userChangeReason);
+        testDataRepository.setResourceSelfLink(String.format(SELF_LINK_TEMPLATE, testDataRepository.getUserName()));
 
         testDataRepository.setResponse(
             requestUtil.executePutRequest(String.format(UPDATE_USER_ENDPOINT_PATH, testDataRepository.getUserId()), String.valueOf(request))

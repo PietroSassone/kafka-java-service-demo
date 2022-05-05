@@ -29,14 +29,19 @@ import com.demo.service.events.UserOperationNotificationEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class KafkaEventStepdefs extends BaseSteps {
     private static final Duration TEN_SECONDS = Duration.ofSeconds(10);
     private static final String TEST_DATA_FOLDER = "kafka";
+    private static final String PURCHASE_EVENT_JSON = "purchaseEvent.json";
 
     private TopicPartition userEventTopicPartition;
+    private TopicPartition purchaseEventTopicPartition;
     private String purchaseEventJsonAsString;
     private List<UserOperationNotificationEvent> userEventsFromKafka = new ArrayList<>();
 
@@ -65,18 +70,34 @@ public class KafkaEventStepdefs extends BaseSteps {
     private KafkaEventDeserializer eventDeserializer;
 
     @Before("@KafkaUserEvent")
-    public void beforeTest() {
+    public void beforeKafkaUserEventTest() {
         userEventTopicPartition = new TopicPartition(userTopicName, 0);
         userEventKafkaConsumer.assign(Collections.singletonList(userEventTopicPartition));
     }
 
+    @Before("@KafkaPurchaseEvent")
+    public void beforeKafkaPurchaseEventTest() {
+        purchaseEventTopicPartition = new TopicPartition(purchaseTopicName, 0);
+    }
+
     @After("@KafkaUserEvent")
-    public void afterTest() {
+    public void afterKafkaUserEventTest() {
         kafkaTopicUtil.purgeKafkaTopic(userEventTopicPartition);
+    }
+
+    @After("@KafkaPurchaseEvent")
+    public void afterKafkaPurchaseEventTest() {
+        kafkaTopicUtil.purgeKafkaTopic(purchaseEventTopicPartition);
+    }
+
+    @Given("a purchase event is prepared")
+    public void aPurchaseEventIsPrepared() {
+        purchaseEventJsonAsString = fileReader.readFileToString(PURCHASE_EVENT_JSON, TEST_DATA_FOLDER);
     }
 
     @When("the purchase event is sent to Kafka")
     public void thePurchaseEventIsSentToKafka() {
+        log.info("attempting to send event to kafka: {}", purchaseEventJsonAsString);
         purchaseEventKafkaTemplate.send(purchaseTopicName, deserializePurchaseEvents(purchaseEventJsonAsString));
     }
 

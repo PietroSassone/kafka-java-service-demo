@@ -4,7 +4,11 @@ The goal of this project is to give a demo about acceptance test implementation 
 In order to do so, there's a simple Spring Boot REST API implementation included in the project.    
 The service has a local H2 DB connection, which is automatically set upd and started along with starting the service.    
 The acceptance tests use Jersey REST client for calling the controllers of the service.  
-At the moment there are no unit tests, as I wanted to demonstrate higher level testing. They may be added later.  
+At the moment there are no unit tests, as I wanted to demonstrate higher level testing. They may be added later.
+
+The service supports CRUD operations for Users and Products via web controllers. Also stores Purchase info received from Kafka.  
+These entities have a limited dataset. In a real project they would store more data.  
+Like currency and such. This is just a simple demo with limited data.  
   
 **1. Pre-requirements for running the application**
 - Have Maven installed.
