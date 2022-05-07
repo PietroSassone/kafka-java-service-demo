@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Request model class for the requests expected bz the update user endpoint.
+ */
 @Getter
 @ToString
 @NoArgsConstructor

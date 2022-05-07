@@ -17,6 +17,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Entity for users to store data that will be persisted in the database.
+ */
 @Entity
 @Getter
 @Setter

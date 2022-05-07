@@ -11,6 +11,9 @@ import com.demo.service.model.ProductModel;
 import com.demo.web.controller.impl.ProductController;
 import com.demo.web.entity.ProductEntity;
 
+/**
+ * Model assembler to return product models mapped from product entities fetched from the database.
+ */
 @Component
 public class ProductModelAssembler implements RepresentationModelAssembler<ProductEntity, ProductModel> {
 

@@ -16,6 +16,9 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import com.demo.service.events.PurchaseEvent;
 
+/**
+ * Kafka consumer configuration for the service.
+ */
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {

@@ -12,6 +12,9 @@ import com.demo.service.model.UserModel;
 import com.demo.web.controller.impl.UserController;
 import com.demo.web.entity.UserEntity;
 
+/**
+ * Model assembler to return user models mapped from user entities fetched from the database.
+ */
 @Component
 public class UserModelAssembler implements RepresentationModelAssembler<UserEntity, UserModel> {
 

@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.demo.service.exception.UserNotFoundException;
 
+/**
+ * Controller advice to return custom error response for the user controller.
+ */
 @ControllerAdvice
 public class UserControllerAdvice {
 

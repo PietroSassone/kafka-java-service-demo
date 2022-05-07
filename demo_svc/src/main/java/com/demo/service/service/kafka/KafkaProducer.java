@@ -8,6 +8,9 @@ import com.demo.service.events.UserOperationNotificationEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Producer that sends events to Kafka on a given topic with given content.
+ */
 @Slf4j
 @Component
 @AllArgsConstructor

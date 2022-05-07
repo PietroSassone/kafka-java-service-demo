@@ -11,6 +11,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Base class for the request model for the requests expected by the user controller.
+ */
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

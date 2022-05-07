@@ -9,6 +9,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * Model class to return product details fetched from the database.
+ */
 @Data
 @Getter
 @ToString

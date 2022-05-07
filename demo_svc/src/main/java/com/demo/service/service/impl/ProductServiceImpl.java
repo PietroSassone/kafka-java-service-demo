@@ -10,6 +10,9 @@ import com.demo.service.service.ProductService;
 import com.demo.web.entity.ProductEntity;
 import com.demo.web.repository.ProductRepository;
 
+/**
+ * Service implementation of CRUD operations for products.
+ */
 @Service
 public class ProductServiceImpl implements ProductService {
 

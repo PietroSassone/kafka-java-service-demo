@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.demo.service.exception.ProductNotFoundException;
 
+/**
+ * Controller advice to return custom error response for the product controller.
+ */
 @ControllerAdvice
 public class ProductControllerAdvice {
 

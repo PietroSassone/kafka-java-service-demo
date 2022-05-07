@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaAdmin;
 
+/**
+ * Config to create Kafka topics for the service.
+ */
 @Configuration
 public class KafkaTopicConfig {
 

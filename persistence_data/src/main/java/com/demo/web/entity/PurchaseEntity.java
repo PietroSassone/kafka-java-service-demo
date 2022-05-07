@@ -23,6 +23,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Entity for purchases to store data that will be persisted in the database.
+ */
 @Entity
 @Getter
 @ToString

@@ -25,6 +25,9 @@ import com.demo.web.entity.ProductEntity;
 import com.demo.web.payload.request.ProductRequest;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * REST controller for the CRUD operations on prodects.
+ */
 @Slf4j
 @RestController
 @RequestMapping("/api/product")

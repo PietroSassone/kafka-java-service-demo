@@ -10,6 +10,9 @@ import com.demo.service.service.UserService;
 import com.demo.web.entity.UserEntity;
 import com.demo.web.repository.UserRepository;
 
+/**
+ * Service implementation of CRUD operations for users.
+ */
 @Service
 public class UserServiceImpl implements UserService {
 

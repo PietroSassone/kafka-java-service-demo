@@ -32,6 +32,9 @@ import com.demo.web.payload.request.CreateUserRequest;
 import com.demo.web.payload.request.UpdateUserRequest;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * REST controller for the CRUD operations on users.
+ */
 @Slf4j
 @RestController
 @RequestMapping("/api/user")

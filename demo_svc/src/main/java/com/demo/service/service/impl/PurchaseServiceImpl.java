@@ -8,6 +8,9 @@ import com.demo.web.entity.PurchaseEntity;
 import com.demo.web.repository.PurchaseRepository;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Service implementation of save operation for purchases.
+ */
 @Slf4j
 @Component
 public class PurchaseServiceImpl implements PurchaseService {

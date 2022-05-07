@@ -15,6 +15,9 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import com.demo.service.events.UserOperationNotificationEvent;
 
+/**
+ * Kafka producer configuration for the service.
+ */
 @Configuration
 public class KafkaProducerConfig {
 

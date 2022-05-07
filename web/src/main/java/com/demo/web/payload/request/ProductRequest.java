@@ -9,6 +9,9 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * Request model class for the requests expected bz the create & update product endpoint.
+ */
 @Getter
 @ToString
 public class ProductRequest {

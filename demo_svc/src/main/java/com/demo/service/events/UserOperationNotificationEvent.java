@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Data stored about users sent in Kafka events.
+ */
 @Getter
 @ToString
 @Setter
