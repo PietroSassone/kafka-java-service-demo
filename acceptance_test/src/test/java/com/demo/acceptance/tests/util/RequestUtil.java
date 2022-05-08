@@ -9,11 +9,18 @@ import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+/**
+ * Util class to store some common logic for executing different HTTP request.
+ */
 @Component
 public class RequestUtil {
 
     @Autowired
     private WebTarget jerseyRestClient;
+
+    public RequestUtil(WebTarget jerseyRestClient) {
+        this.jerseyRestClient = jerseyRestClient;
+    }
 
     public Response executeGetRequest(final String endpointPath) {
         return getJerseyClientBuilder(endpointPath).get();

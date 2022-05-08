@@ -22,6 +22,9 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Step definitions for the get user endpoint cucumber tests.
+ */
 @Slf4j
 public class GetUserStepDefs extends BaseSteps {
 

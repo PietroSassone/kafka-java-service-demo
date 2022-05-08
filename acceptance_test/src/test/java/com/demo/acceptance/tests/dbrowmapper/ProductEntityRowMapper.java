@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import com.demo.web.entity.ProductEntity;
 
+/**
+ * Row mapper for creating ProductEntity object from JDBC query result.
+ */
 @Component
 public class ProductEntityRowMapper implements RowMapper<ProductEntity> {
 

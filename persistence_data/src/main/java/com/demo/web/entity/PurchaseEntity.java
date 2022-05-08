@@ -39,6 +39,8 @@ public class PurchaseEntity {
     @Column(name = "purchase_id")
     private Long id;
 
+    private Long eventId;
+
     @JoinTable(
         name = "purchase_for_user",
         joinColumns = @JoinColumn(name = "purchase_id"),

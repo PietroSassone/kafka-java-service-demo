@@ -16,6 +16,9 @@ import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Util class to to insert DB records and return the new record's primary key.
+ */
 @Slf4j
 @Component
 public class DbTestDataManipulator {

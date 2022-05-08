@@ -9,6 +9,9 @@ import com.demo.service.events.PurchaseEvent;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Deserializer util from JSON to custom Kafka event object.
+ */
 @Component
 public class KafkaEventDeserializer {
 

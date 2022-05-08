@@ -20,8 +20,10 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import jakarta.ws.rs.core.Response;
 
+/**
+ * Step definitions for the get product endpoint cucumber tests.
+ */
 public class GetProductStepDefs extends BaseSteps {
 
     private static final String GET_PRODUCT_ENDPOINT_PATH = "/api/product/%s/getProduct";

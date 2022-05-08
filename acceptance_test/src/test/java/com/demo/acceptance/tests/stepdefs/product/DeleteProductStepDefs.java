@@ -17,6 +17,9 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import jakarta.ws.rs.core.Response;
 
+/**
+ * Step definitions for the delete product endpoint cucumber tests.
+ */
 public class DeleteProductStepDefs extends BaseSteps {
 
     private static final String DELETE_PRODUCT_ENDPOINT_PATH = "/api/product/products/%s";

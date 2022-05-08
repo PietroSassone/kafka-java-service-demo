@@ -18,6 +18,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+/**
+ * Step definitions for the create product endpoint cucumber tests.
+ */
 public class CreateProductStepDefs extends BaseSteps {
 
     private static final String CREATE_PRODUCT_ENDPOINT_PATH = "/api/product/createProduct";
@@ -51,11 +54,7 @@ public class CreateProductStepDefs extends BaseSteps {
 
     @After("@createProduct")
     public void afterTest() {
-        testDataRepository.getProductIds().forEach(productId -> {
-            if (Objects.nonNull(productId)) {
-                productDao.deleteResourceById(Long.parseLong(productId));
-            }
-        });
+        testDataRepository.getProductIds().forEach(productId -> productDao.deleteResourceById(Long.parseLong(productId)));
     }
 
     @Given("a product request is created")

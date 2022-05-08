@@ -3,6 +3,8 @@ package com.demo.acceptance.tests.stepdefs;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
+import java.time.Duration;
+
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.Customization;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -15,6 +17,9 @@ import com.demo.acceptance.tests.repository.TestDataRepository;
 import com.demo.acceptance.tests.util.FileReaderUtil;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+/**
+ * Step definition helper methods & constants that are used by both user & product endpoint cucumber tests.
+ */
 public class BaseSteps {
     private static final String LINKS_NODE_NAME = "_links";
     
@@ -28,6 +33,7 @@ public class BaseSteps {
     protected static final String TEST_DATA_FOLDER_PRODUCTS = "products";
     protected static final String TEST_DATA_FOLDER_USERS = "users";
     protected static final String EXPECTED_RESPONSE_TEMPLATE = "getEndpointResponseTemplate.json";
+    protected static final Duration TEN_SECONDS = Duration.ofSeconds(10);
 
     @Autowired
     private TestDataRepository testDataRepository;

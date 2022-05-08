@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Kafka admin config for the acceptance test module.
+ */
 @Configuration
 public class KafkaTestAdminConfig {
 

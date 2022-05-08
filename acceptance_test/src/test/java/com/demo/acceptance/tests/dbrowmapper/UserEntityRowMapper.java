@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import com.demo.web.entity.UserEntity;
 
+/**
+ * Row mapper for creating UserEntity object from JDBC query result.
+ */
 @Component
 public class UserEntityRowMapper implements RowMapper<UserEntity> {
 

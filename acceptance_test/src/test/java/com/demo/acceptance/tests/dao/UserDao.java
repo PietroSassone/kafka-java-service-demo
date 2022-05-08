@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import com.demo.web.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * DAO class for finding & deleting users in the database.
+ */
 @Slf4j
 @Component
 public class UserDao extends BaseDao<UserEntity> {

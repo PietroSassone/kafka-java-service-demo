@@ -1,5 +1,6 @@
 package com.demo.service.model;
 
+import com.demo.web.entity.ProductEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PurchaseDetail {
-    private String productId;
-    private String productName;
-    private Double price;
+    private ProductEntity product;
     private int quantity;
 }

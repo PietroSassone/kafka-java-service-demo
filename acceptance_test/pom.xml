@@ -26,6 +26,7 @@
     <jersey.client.version>3.0.4</jersey.client.version>
     <json.assert.version>1.5.0</json.assert.version>
     <jersey.media.version>3.1.0-M2</jersey.media.version>
+    <awaitility.version>4.2.0</awaitility.version>
     <cluecumber.report.version>2.8.0</cluecumber.report.version>
 
     <CONFIG>acceptance-test-dev</CONFIG>
@@ -185,6 +186,12 @@
       <groupId>org.skyscreamer</groupId>
       <artifactId>jsonassert</artifactId>
       <version>${json.assert.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <version>${awaitility.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

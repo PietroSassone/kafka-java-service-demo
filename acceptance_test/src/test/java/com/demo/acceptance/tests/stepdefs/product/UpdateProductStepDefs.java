@@ -7,6 +7,9 @@ import com.demo.acceptance.tests.stepdefs.BaseSteps;
 import com.demo.acceptance.tests.util.RequestUtil;
 import io.cucumber.java.en.When;
 
+/**
+ * Step definitions for the update product endpoint cucumber tests.
+ */
 public class UpdateProductStepDefs extends BaseSteps {
     private static final String UPDATE_PRODUCT_ENDPOINT_PATH = "/api/product/products/%s";
     private static final String SELF_LINK_TEMPLATE = "/api/product/%s/getProduct";

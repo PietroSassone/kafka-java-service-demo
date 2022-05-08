@@ -12,6 +12,9 @@ import com.demo.acceptance.tests.repository.TestDataRepository;
 import com.demo.acceptance.tests.util.FileReaderUtil;
 import io.cucumber.java.en.Then;
 
+/**
+ * Step definitions that are used by both user & product endpoint cucumber tests.
+ */
 public class CommonStepdefs extends BaseSteps {
 
     private static final String PARAMETER_IS_NULL = "parameter is null";

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import com.demo.web.entity.ProductEntity;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * DAO class for finding & deleting products in the database.
+ */
 @Slf4j
 @Component
 public class ProductDao extends BaseDao<ProductEntity> {

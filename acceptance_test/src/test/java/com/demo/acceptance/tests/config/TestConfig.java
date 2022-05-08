@@ -18,6 +18,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
 
+/**
+ * Spring config for the acceptance test module.
+ */
 @Configuration
 @ComponentScan(basePackages = "com.demo.acceptance.tests")
 @PropertySource("classpath:configuration/${CONFIG:acceptance-test-dev}.properties")

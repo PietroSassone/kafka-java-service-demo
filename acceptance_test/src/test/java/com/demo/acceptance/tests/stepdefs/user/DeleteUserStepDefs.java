@@ -18,6 +18,9 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import jakarta.ws.rs.core.Response;
 
+/**
+ * Step definitions for the delete user endpoint cucumber tests.
+ */
 public class DeleteUserStepDefs extends BaseSteps {
 
     private static final String DELETE_USER_ENDPOINT_PATH = "/api/user/users/%s";

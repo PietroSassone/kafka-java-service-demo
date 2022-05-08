@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Abstract DAO class for finding & deleting resources in the database.
+ */
 @Slf4j
 @AllArgsConstructor
 public abstract class BaseDao<T> {

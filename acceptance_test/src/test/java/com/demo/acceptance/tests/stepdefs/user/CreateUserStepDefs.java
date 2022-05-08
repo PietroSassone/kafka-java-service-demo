@@ -18,6 +18,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+/**
+ * Step definitions for the create user endpoint cucumber tests.
+ */
 public class CreateUserStepDefs extends BaseSteps {
     private static final String CREATE_USER_ENDPOINT_PATH = "/api/user/createUser";
     private static final String REQUEST_TEMPLATE = "createUserRequestTemplate.json";
@@ -52,11 +55,7 @@ public class CreateUserStepDefs extends BaseSteps {
 
     @After("@createUser")
     public void afterTest() {
-        testDataRepository.getUserIds().forEach(userId -> {
-            if (Objects.nonNull(userId)) {
-                userDao.deleteResourceById(Long.parseLong(userId));
-            }
-        });
+        testDataRepository.getUserIds().forEach(userId -> userDao.deleteResourceById(Long.parseLong(userId)));
     }
 
     @Given("a user request is created")

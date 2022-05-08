@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+/**
+ * Util class to store some common logic for JSON node changes.
+ */
 @Component
 public class JsonHelper {
 

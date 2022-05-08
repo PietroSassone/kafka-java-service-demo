@@ -9,6 +9,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 
+/**
+ * Step definitions for the update user endpoint cucumber tests.
+ */
 public class UpdateUserStepDefs extends BaseSteps {
     private static final String UPDATE_USER_ENDPOINT_PATH = "/api/user/users/%s";
     private static final String CHANGE_REASON_NODE_NAME = "changeReason";

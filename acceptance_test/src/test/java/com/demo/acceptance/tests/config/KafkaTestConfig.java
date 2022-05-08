@@ -23,6 +23,9 @@ import com.demo.service.config.KafkaProducerConfig;
 import com.demo.service.events.PurchaseEvent;
 import com.demo.service.events.UserOperationNotificationEvent;
 
+/**
+ * Kafka producer & consumer config for the acceptance test module.
+ */
 @Configuration
 @Import(KafkaProducerConfig.class)
 public class KafkaTestConfig {
