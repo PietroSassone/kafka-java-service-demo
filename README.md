@@ -24,9 +24,9 @@ If yes, it is updated. If no, it will be created and persisted instead.
 - The user/product details in the request bodies are validated according to length and value constraints.
 - If a user is created or updated, the service sends a message about the event to Kafka.
 - The service consumes Kafka events about purchase information. Validates them. If the user/products in the event are nonexistent, an error is logged.  
-Otherwise the purchase details are saved into the database. In real life these events would be sent by some other service.  
+Otherwise, the purchase details are saved into the database. In real life these events would be sent by some other service.  
 In this demo, they are sent from automated tests.
-- All of the functionality described here is tested in automated acceptance tests.  
+- All the functionality described here is tested in automated acceptance tests.  
 
 **2. Pre-requirements for running the application**
 - Have Maven installed.
@@ -65,7 +65,7 @@ Also publish & consume events from a locally running Apache Kafka. Then assert t
   
 As a pre-requirement, the service with the local Kafka and Zookeeper should already be running.    
 
-To start all of the tests, use the following command from the repository root in a terminal:  
+To start all the tests, use the following command from the repository root in a terminal:  
     ```
     mvn clean verify -P run-acceptance-tests -pl acceptance_test
     ```
@@ -78,7 +78,7 @@ Example command to run only the get user endpoint's tests:
     ```  
     
 **Test reports**
-The framework saves reports and logs in the target folder after a test run finishes.
+The framework saves reports and logs in the target folder of the acceptance test module after a test run finishes.
 1. Logs are saved in target/logs.
 1. Cucumber reports are saved in target/cucumber-report.
 1. More detailed fancy Cluecumber reports are saved in target/test-report.
