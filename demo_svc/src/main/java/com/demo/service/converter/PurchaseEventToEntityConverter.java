@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import com.demo.service.events.PurchaseEvent;
 import com.demo.service.exception.ProductNotFoundException;
@@ -18,20 +19,25 @@ import com.demo.service.service.UserService;
 import com.demo.web.entity.ProductEntity;
 import com.demo.web.entity.PurchaseEntity;
 import com.demo.web.entity.UserEntity;
+import lombok.AllArgsConstructor;
 
 /**
  * Converter class to create purchase entities for persistence from purchase Kafka events.
  */
+@AllArgsConstructor
 @Component
 public class PurchaseEventToEntityConverter {
 
     @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     public PurchaseEntity convert(final PurchaseEvent purchaseEvent) {
+        Assert.notNull(purchaseEvent.getEventId(), "Event Id must not be null.");
+        Assert.notNull(purchaseEvent.getUserId(), "User Id of event must not be null.");
+
         final UserEntity userFromThePurchase = getUserEntityOrException().apply(purchaseEvent);
 
         final List<ProductEntity> productsFromThePurchase = getProductsOrException().apply(getDetailStream().apply(purchaseEvent));

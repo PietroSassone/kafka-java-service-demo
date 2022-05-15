@@ -28,6 +28,12 @@
     <spring.kafka.version>2.8.3</spring.kafka.version>
     <jackson.version>2.13.2</jackson.version>
     <apache.commons.version>3.12.0</apache.commons.version>
+    <hamcrest.version>2.2</hamcrest.version>
+    <testng.version>7.5</testng.version>
+    <mockito.version>4.5.1</mockito.version>
+    <surefire.plugin.version>2.22.2</surefire.plugin.version>
+
+    <skipUnitTest>false</skipUnitTest>
   </properties>
 
   <profiles>
@@ -74,6 +80,26 @@
           <failOnViolation>true</failOnViolation>
           <logViolationsToConsole>true</logViolationsToConsole>
           <consoleOutput>true</consoleOutput>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${surefire.plugin.version}</version>
+        <executions>
+          <execution>
+            <configuration>
+              <includes>
+                <include>**/*Test.java</include>
+              </includes>
+              <excludes>
+                <exclude>**/*IT.java</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <skipTests>${skipUnitTest}</skipTests>
         </configuration>
       </plugin>
     </plugins>
@@ -130,6 +156,24 @@
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
         <version>${apache.commons.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>${testng.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockito.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest</artifactId>
+        <version>${hamcrest.version}</version>
+        <scope>test</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>

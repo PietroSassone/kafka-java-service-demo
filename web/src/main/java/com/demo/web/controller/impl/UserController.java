@@ -57,14 +57,14 @@ public class UserController {
 
     @PostMapping("/createUser")
     public ResponseEntity<?> createUser(@Valid @RequestBody final CreateUserRequest createUserRequest) {
-        log.info("Create User Request received: {}", createUserRequest);
+        log.info("Create User Request received for user: {}", createUserRequest.getUserName());
 
         if (userService.findByUserName(createUserRequest.getUserName()).isPresent()) {
             throw new DataIntegrityViolationException("User already exists.");
         }
 
-        final UserEntity newUser = new UserEntity(createUserRequest.getUserName(), createUserRequest.getMoneyBalance());
-        final UserModel userModel = userModelAssembler.toModel(userService.saveUser(newUser));
+        final UserEntity newUser = userService.saveUser(new UserEntity(createUserRequest.getUserName(), createUserRequest.getMoneyBalance()));
+        final UserModel userModel = userModelAssembler.toModel(newUser);
 
         sendUserOperationNotificationToKafka(newUser, UserChangeReason.USER_CREATED);
 
@@ -75,7 +75,7 @@ public class UserController {
 
     @PutMapping("/users/{id}")
     public ResponseEntity<?> updateUser(@Valid @RequestBody final UpdateUserRequest updateUserRequest, @PathVariable final Long id) {
-        log.info("Update User Request received: {}", updateUserRequest.toString());
+        log.info("Update User Request received for user: id {}, name: {}", id, updateUserRequest.getUserName());
 
         final UserChangeReason[] userChangeReason = new UserChangeReason[1];
         final UserEntity updatedUser = userService.findByUserId(id)
@@ -130,7 +130,7 @@ public class UserController {
     }
 
     private void sendUserOperationNotificationToKafka(final UserEntity user, final UserChangeReason changeReason) {
-        log.info("Sending Kafka event about successfully created new user.");
+        log.info("Sending Kafka event about user change with userId {}.", user.getId());
         kafkaProducer.sendUserChangeEvent(
             userOperationTopicName,
             new UserOperationNotificationEvent(new Random().nextLong(), user.getId(), user.getUsername(), user.getBalance(), changeReason)

@@ -4,7 +4,7 @@ A small Java backend service to demonstrate Spring-boot, REST API & Kafka usage 
 * In order to do so, there's a simple Spring Boot REST API implementation included in the project.    
 * The service has a local H2 DB connection, which is automatically set up and started along with starting the service.    
 * The acceptance tests use Jersey REST client for calling the controllers of the service.  
-* At the moment there are no unit tests, as I wanted to demonstrate higher level testing. They may be added later.
+* Also, there are unit tests for the controllers. Plus a few tests in the service module. They do not cover 100% functionality as I mostly focused on demonstrating higher level (acceptance) testing coverage with this project.
 
 * The service supports CRUD operations for Users and Products via web controllers. Also, stores Purchase info received from Kafka.  
 These entities have a limited dataset. In a real project they would store more data.  

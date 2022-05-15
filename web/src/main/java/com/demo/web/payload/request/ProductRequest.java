@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -14,6 +15,7 @@ import lombok.ToString;
  */
 @Getter
 @ToString
+@AllArgsConstructor
 public class ProductRequest {
     private static final int MINIMUM_PARAM_LENGTH = 3;
     private static final int MAXIMUM_PARAM_LENGTH = 50;

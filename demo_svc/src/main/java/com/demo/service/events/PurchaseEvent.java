@@ -21,8 +21,8 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class PurchaseEvent {
 
-    private long eventId;
-    private long userId;
+    private Long eventId;
+    private Long userId;
     private List<PurchaseDetail> purchaseDetails;
     private Double totalValue;
 }
