@@ -49,6 +49,8 @@ public class ProductControllerTest {
     @Mock
     private ProductModelAssembler productModelAssemblerMock;
 
+    private final Function<Long, Link> addApiLinkToProduct = productId -> WebMvcLinkBuilder.linkTo(methodOn(ProductController.class).getProduct(productId)).withSelfRel();
+
     private ProductController undertest;
 
     @BeforeClass
@@ -229,6 +231,4 @@ public class ProductControllerTest {
             {0L}, {-1L}, {null}
         };
     }
-
-    private final Function<Long, Link> addApiLinkToProduct = productId -> WebMvcLinkBuilder.linkTo(methodOn(ProductController.class).getProduct(productId)).withSelfRel();
 }

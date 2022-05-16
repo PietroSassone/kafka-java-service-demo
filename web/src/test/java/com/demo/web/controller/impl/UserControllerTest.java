@@ -64,6 +64,16 @@ public class UserControllerTest {
     @Mock
     private KafkaProducer kafkaProducerMock;
 
+    private final Function<String, Link> addApiLinkToUser = userName -> WebMvcLinkBuilder.linkTo(methodOn(UserController.class).getUser(userName)).withSelfRel();
+
+    private final Function<UserChangeReason, Void> verifyKafkaProducerSendingEventWithReason = changeReason -> {
+        final ArgumentCaptor<UserOperationNotificationEvent> valueCapture = getArgumentCaptorForKafkaEvent();
+
+        verify(kafkaProducerMock).sendUserChangeEvent(any(), valueCapture.capture());
+        assertEquals(valueCapture.getValue().getChangeReason(), changeReason);
+        return null;
+    };
+
     private UserController undertest;
 
     @BeforeClass
@@ -266,17 +276,7 @@ public class UserControllerTest {
         };
     }
 
-    private final Function<String, Link> addApiLinkToUser = userName -> WebMvcLinkBuilder.linkTo(methodOn(UserController.class).getUser(userName)).withSelfRel();
-
     private ArgumentCaptor<UserOperationNotificationEvent> getArgumentCaptorForKafkaEvent() {
         return ArgumentCaptor.forClass(UserOperationNotificationEvent.class);
     }
-
-    private final Function<UserChangeReason, Void> verifyKafkaProducerSendingEventWithReason = changeReason -> {
-        final ArgumentCaptor<UserOperationNotificationEvent> valueCapture = getArgumentCaptorForKafkaEvent();
-
-        verify(kafkaProducerMock).sendUserChangeEvent(any(), valueCapture.capture());
-        assertEquals(valueCapture.getValue().getChangeReason(), changeReason);
-        return null;
-    };
 }
