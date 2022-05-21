@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/api/controller/resource/endpoint"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "eventId": 1,
+  "userId": "1",
+  "purchaseDetails": [
+    {
+      "product": {
+        "id": 1,
+        "productName": "test",
+        "price": 600
+      },
+      "quantity": 1
+    },
+    {
+      "product": {
+        "id": 2,
+        "productName": "test2",
+        "price": 400
+      },
+      "quantity": 1
+    }
+  ],
+  "totalValue": 1000.0
+}
