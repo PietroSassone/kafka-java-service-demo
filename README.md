@@ -87,7 +87,7 @@ Open the swagger after the application has been started [here](http://localhost:
 The application uses Lombok and Logback for logging.  
 Logs can be found in the ```target/logs``` directory of both the web, and the acceptance tests module.  
 
-#Running the acceptance tests  
+# Running the acceptance tests  
 The data processing of the service is covered with automated tests in the acceptance test module.  
 The tests cover both negative and positive cases. For the cases, Cucumber & Gherkin are used.  
 Reading the Cucumber feature files, the test cases should be straightforward to understand.
