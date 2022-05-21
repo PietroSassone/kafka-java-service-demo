@@ -28,12 +28,44 @@ Otherwise, the purchase details are saved into the database. In real life these 
 In this demo, they are sent from automated tests.
 - All the functionality described here is tested in automated acceptance tests.  
 
-**2. Pre-requirements for running the application**
+**2. Technologies used**  
+In the acceptance tests:  
+- Cucumber 7 for Behaviour Specification and Data Driven Testing.
+- Maven Failsafe plugin to run the acceptance test suite.
+- TestNG for running the Cucumber tests.
+- Hamcrest for asserts.
+- Awaitility to wait dynamically for conditions in tests.
+- Jersey REST client to send HTTP requests to the service, from the tests.
+- Cluecumber plugin for visualization of test reports.
+- Logback & Lombok for logging.
+- Spring Core for dependency injection.
+- Kafka Java client to test sending/consuming Kafka events.
+- SkyScreamer JSONAssert for verifying JSON contents in tests.
+- JDBC template to access the database used by the service.
+- Jackson Object mapper for reading JSON files.
+
+In the service:  
+- Maven Surefire plugin to run the unit tests.
+- TestNG, Hamcrest, Mockito for unit testing with mocking.
+- Logback & Lombok for logging.
+- Lombok to eliminate a lot of code.
+- Spring boot for running the service, and creating REST controllers for the API.
+- Spring boot web starter for controller exception handling via controller advices.
+- Spring Core for dependency injection.
+- Hateoas for REST representation models.
+- Maven Checkstyle for enforcing coding conventions.
+- Kafka Java client to create Kafka topics, publish and consume events.
+- Java H2 client to run a H2 DB in persistent & server mode.
+- Spring Data JPA for persistence implementation.
+- Docker compose for starting the pre-requirements of the service.
+- Swagger OpenAPI 3 for endpoint service documentation.
+
+**3. Pre-requirements for running the application**
 - Have Maven installed.
 - Have Java installed, at least version 11.
 - Have Docker with Compose OR Zookeper and Apache Kafka installed.
  
-**3. How to start the application**
+**4. How to start the application**
 1. Open a terminal in the root directory of the repository.  
 1. Build with ```mvn clean install```.  
 1. Start Zookeeper and Apache Kafka. See notes below.  
@@ -47,11 +79,11 @@ Start Zookeper and Kafka, can be done either by:
   * Installing and starting them separately based on the [official Apache Kafka guide](https://kafka.apache.org/quickstart).  
   * Or launching the docker compose file in the root folder of this repository. From a terminal, via ```docker-compose -f docker-compose.yml up```.    
 
-**4. Swagger UI link:**  
+**5. Swagger UI link:**  
 The service has Swagger integration for easy interaction with the controllers from a browser.  
 Open the swagger after the application has been started [here](http://localhost:8080/swagger-ui.html).
 
-**5. Logging**  
+**6. Logging**  
 The application uses Lombok and Logback for logging.  
 Logs can be found in the ```target/logs``` directory of both the web, and the acceptance tests module.  
 
