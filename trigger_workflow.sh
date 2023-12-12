@@ -11,3 +11,4 @@ curl -X POST \
   -H "Authorization: Bearer $PAT_TOKEN" \
   "https://api.github.com/repos/$REPO_A_OWNER/$REPO_A_NAME/actions/workflows/$REPO_A_WORKFLOW_NAME/dispatches" \
   -d '{"ref":"main", "inputs": {"commit_hash": "'$COMMIT_HASH'"}}'
+
